@@ -1,58 +1,59 @@
 package org.mengyun.tcctransaction.sample.capital.domain.entity;
 
-
-
 import org.mengyun.tcctransaction.sample.exception.InsufficientBalanceException;
 
 import java.math.BigDecimal;
 
 /**
+ * 资金账户
+ * 
  * Created by changming.xie on 4/2/16.
  */
 public class CapitalAccount {
 
-    private long id;
+	/** 资金账户ID */
+	private long id;
+	/** 用户ID */
+	private long userId;
 
-    private long userId;
+	/** 资金余额 */
+	private BigDecimal balanceAmount;
 
-    private BigDecimal balanceAmount;
+	private BigDecimal transferAmount = BigDecimal.ZERO;
 
-    private BigDecimal transferAmount = BigDecimal.ZERO;
+	public long getUserId() {
+		return userId;
+	}
 
-    public long getUserId() {
-        return userId;
-    }
+	public BigDecimal getBalanceAmount() {
+		return balanceAmount;
+	}
 
-    public BigDecimal getBalanceAmount() {
-        return balanceAmount;
-    }
+	public long getId() {
+		return id;
+	}
 
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public long getId() {
-        return id;
-    }
+	public void transferFrom(BigDecimal amount) {
 
-    public void setId(long id) {
-        this.id = id;
-    }
+		this.balanceAmount = this.balanceAmount.subtract(amount);
 
-    public void transferFrom(BigDecimal amount) {
+		if (BigDecimal.ZERO.compareTo(this.balanceAmount) > 0) {
+			throw new InsufficientBalanceException();
+		}
 
-        this.balanceAmount = this.balanceAmount.subtract(amount);
+		transferAmount = transferAmount.add(amount.negate());
+	}
 
-        if (BigDecimal.ZERO.compareTo(this.balanceAmount) > 0) {
-            throw new InsufficientBalanceException();
-        }
+	public void transferTo(BigDecimal amount) {
+		this.balanceAmount = this.balanceAmount.add(amount);
+		transferAmount = transferAmount.add(amount);
+	}
 
-        transferAmount = transferAmount.add(amount.negate());
-    }
-
-    public void transferTo(BigDecimal amount) {
-        this.balanceAmount = this.balanceAmount.add(amount);
-        transferAmount = transferAmount.add(amount);
-    }
-
-    public void cancelTransfer(BigDecimal amount) {
-        transferTo(amount);
-    }
+	public void cancelTransfer(BigDecimal amount) {
+		transferTo(amount);
+	}
 }

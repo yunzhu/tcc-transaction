@@ -43,6 +43,7 @@ public class CapitalTradeOrderServiceImpl implements CapitalTradeOrderService {
         TradeOrder foundTradeOrder = tradeOrderRepository.findByMerchantOrderNo(tradeOrderDto.getMerchantOrderNo());
 
         //check if trade order has been recorded, if yes, return success directly.
+        //这是为了保证接口的幂等性
         if (foundTradeOrder == null) {
 
             TradeOrder tradeOrder = new TradeOrder(

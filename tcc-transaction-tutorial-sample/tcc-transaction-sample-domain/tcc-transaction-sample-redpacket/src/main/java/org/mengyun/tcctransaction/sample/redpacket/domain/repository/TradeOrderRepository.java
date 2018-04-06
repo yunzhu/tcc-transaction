@@ -20,7 +20,6 @@ public class TradeOrderRepository {
     }
 
     public void update(TradeOrder tradeOrder) {
-
         tradeOrder.updateVersion();
         int effectCount = tradeOrderDao.update(tradeOrder);
         if (effectCount < 1) {

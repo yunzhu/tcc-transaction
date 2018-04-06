@@ -1,8 +1,13 @@
 package org.mengyun.tcctransaction.sample.http.order.web.controller;
 
+import java.math.BigDecimal;
+import java.security.InvalidParameterException;
+import java.util.List;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.mengyun.tcctransaction.sample.http.order.service.AccountServiceImpl;
 import org.mengyun.tcctransaction.sample.http.order.service.PlaceOrderServiceImpl;
+import org.mengyun.tcctransaction.sample.http.order.web.comm.MyApplicationContextInit;
 import org.mengyun.tcctransaction.sample.http.order.web.controller.vo.PlaceOrderRequest;
 import org.mengyun.tcctransaction.sample.order.domain.entity.Order;
 import org.mengyun.tcctransaction.sample.order.domain.entity.Product;
@@ -16,10 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
-
-import java.math.BigDecimal;
-import java.security.InvalidParameterException;
-import java.util.List;
 
 /**
  * Created by changming.xie on 4/1/16.
@@ -39,6 +40,9 @@ public class OrderController {
 
     @Autowired
     OrderServiceImpl orderService;
+    
+    @Autowired
+    MyApplicationContextInit myApplicationContext;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index() {
@@ -90,7 +94,7 @@ public class OrderController {
         String merchantOrderNo = placeOrderService.placeOrder(request.getPayerUserId(), request.getShopId(),
                 request.getProductQuantities(), request.getRedPacketPayAmount());
 
-        return new RedirectView("/payresult/" + merchantOrderNo);
+        return new RedirectView(this.myApplicationContext.getContextPath() + "/payresult/" + merchantOrderNo);
     }
 
     @RequestMapping(value = "/payresult/{merchantOrderNo}", method = RequestMethod.GET)

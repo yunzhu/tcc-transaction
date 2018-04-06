@@ -8,110 +8,114 @@ import java.util.List;
 import java.util.UUID;
 
 /**
+ * 订单
+ * 
  * Created by changming.xie on 3/25/16.
  */
 public class Order implements Serializable {
 
-    private static final long serialVersionUID = -5908730245224893590L;
-    private long id;
+	private static final long serialVersionUID = -5908730245224893590L;
 
-    private long payerUserId;
+	/** 订单ID */
+	private long id;
+	/** 付款人ID */
+	private long payerUserId;
+	/** 收款人ID */
+	private long payeeUserId;
+	/** 红包支付金额 */
+	private BigDecimal redPacketPayAmount;
+	/** 资金支付金额 */
+	private BigDecimal capitalPayAmount;
+	/** 订单状态 */
+	private String status = "DRAFT";
+	/** 商户订单号 */
+	private String merchantOrderNo;
+	/** 版本 */
+	private long version = 1l;
 
-    private long payeeUserId;
+	/** 订单项目 */
+	private List<OrderLine> orderLines = new ArrayList<OrderLine>();
 
-    private BigDecimal redPacketPayAmount;
+	public Order() {
 
-    private BigDecimal capitalPayAmount;
+	}
 
-    private String status = "DRAFT";
+	public Order(long payerUserId, long payeeUserId) {
+		this.payerUserId = payerUserId;
+		this.payeeUserId = payeeUserId;
+		this.merchantOrderNo = UUID.randomUUID().toString();
+	}
 
-    private String merchantOrderNo;
+	public long getPayerUserId() {
+		return payerUserId;
+	}
 
-    private long version = 1l;
+	public long getPayeeUserId() {
+		return payeeUserId;
+	}
 
-    private List<OrderLine> orderLines = new ArrayList<OrderLine>();
+	public BigDecimal getTotalAmount() {
 
-    public Order() {
+		BigDecimal totalAmount = BigDecimal.ZERO;
 
-    }
+		for (OrderLine orderLine : orderLines) {
 
-    public Order(long payerUserId, long payeeUserId) {
-        this.payerUserId = payerUserId;
-        this.payeeUserId = payeeUserId;
-        this.merchantOrderNo = UUID.randomUUID().toString();
-    }
+			totalAmount = totalAmount.add(orderLine.getTotalAmount());
+		}
+		return totalAmount;
+	}
 
-    public long getPayerUserId() {
-        return payerUserId;
-    }
+	public void addOrderLine(OrderLine orderLine) {
+		this.orderLines.add(orderLine);
+	}
 
-    public long getPayeeUserId() {
-        return payeeUserId;
-    }
+	public List<OrderLine> getOrderLines() {
+		return Collections.unmodifiableList(this.orderLines);
+	}
 
-    public BigDecimal getTotalAmount() {
+	public void pay(BigDecimal redPacketPayAmount, BigDecimal capitalPayAmount) {
+		this.redPacketPayAmount = redPacketPayAmount;
+		this.capitalPayAmount = capitalPayAmount;
+		this.status = "PAYING";
+	}
 
-        BigDecimal totalAmount = BigDecimal.ZERO;
+	public BigDecimal getRedPacketPayAmount() {
+		return redPacketPayAmount;
+	}
 
-        for (OrderLine orderLine : orderLines) {
+	public BigDecimal getCapitalPayAmount() {
+		return capitalPayAmount;
+	}
 
-            totalAmount = totalAmount.add(orderLine.getTotalAmount());
-        }
-        return totalAmount;
-    }
+	public String getMerchantOrderNo() {
+		return merchantOrderNo;
+	}
 
-    public void addOrderLine(OrderLine orderLine) {
-        this.orderLines.add(orderLine);
-    }
+	public void setMerchantOrderNo(String merchantOrderNo) {
+		this.merchantOrderNo = merchantOrderNo;
+	}
 
-    public List<OrderLine> getOrderLines() {
-        return Collections.unmodifiableList(this.orderLines);
-    }
+	public long getId() {
+		return id;
+	}
 
-    public void pay(BigDecimal redPacketPayAmount, BigDecimal capitalPayAmount) {
-        this.redPacketPayAmount = redPacketPayAmount;
-        this.capitalPayAmount = capitalPayAmount;
-        this.status = "PAYING";
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public BigDecimal getRedPacketPayAmount() {
-        return redPacketPayAmount;
-    }
+	public void confirm() {
+		this.status = "CONFIRMED";
+	}
 
-    public BigDecimal getCapitalPayAmount() {
-        return capitalPayAmount;
-    }
+	public void cancelPayment() {
+		this.status = "PAY_FAILED";
+	}
 
-    public String getMerchantOrderNo() {
-        return merchantOrderNo;
-    }
+	public long getVersion() {
+		return version;
+	}
 
-    public void setMerchantOrderNo(String merchantOrderNo) {
-        this.merchantOrderNo = merchantOrderNo;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void confirm() {
-        this.status = "CONFIRMED";
-    }
-
-    public void cancelPayment() {
-        this.status = "PAY_FAILED";
-    }
-
-
-    public long getVersion() {
-        return version;
-    }
-
-    public void updateVersion() {
-        version++;
-    }
+	public void updateVersion() {
+		version++;
+	}
 }

@@ -8,55 +8,56 @@ import java.math.BigDecimal;
  */
 public class CapitalTradeOrderDto implements Serializable {
 
-    private static final long serialVersionUID = 6627401903410124642L;
-    
-    private long selfUserId;
+	private static final long serialVersionUID = 6627401903410124642L;
 
-    private long oppositeUserId;
+	/** 自己用户ID */
+	private long selfUserId;
+	/** 对方用户ID */
+	private long oppositeUserId;
+	/** 订单标题 */
+	private String orderTitle;
+	/** 商户订单号 */
+	private String merchantOrderNo;
+	/** 金额 */
+	private BigDecimal amount;
 
-    private String orderTitle;
+	public long getSelfUserId() {
+		return selfUserId;
+	}
 
-    private String merchantOrderNo;
+	public void setSelfUserId(long selfUserId) {
+		this.selfUserId = selfUserId;
+	}
 
-    private BigDecimal amount;
+	public long getOppositeUserId() {
+		return oppositeUserId;
+	}
 
-    public long getSelfUserId() {
-        return selfUserId;
-    }
+	public void setOppositeUserId(long oppositeUserId) {
+		this.oppositeUserId = oppositeUserId;
+	}
 
-    public void setSelfUserId(long selfUserId) {
-        this.selfUserId = selfUserId;
-    }
+	public String getOrderTitle() {
+		return orderTitle;
+	}
 
-    public long getOppositeUserId() {
-        return oppositeUserId;
-    }
+	public void setOrderTitle(String orderTitle) {
+		this.orderTitle = orderTitle;
+	}
 
-    public void setOppositeUserId(long oppositeUserId) {
-        this.oppositeUserId = oppositeUserId;
-    }
+	public String getMerchantOrderNo() {
+		return merchantOrderNo;
+	}
 
-    public String getOrderTitle() {
-        return orderTitle;
-    }
+	public void setMerchantOrderNo(String merchantOrderNo) {
+		this.merchantOrderNo = merchantOrderNo;
+	}
 
-    public void setOrderTitle(String orderTitle) {
-        this.orderTitle = orderTitle;
-    }
+	public BigDecimal getAmount() {
+		return amount;
+	}
 
-    public String getMerchantOrderNo() {
-        return merchantOrderNo;
-    }
-
-    public void setMerchantOrderNo(String merchantOrderNo) {
-        this.merchantOrderNo = merchantOrderNo;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
 }
