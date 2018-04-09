@@ -68,7 +68,6 @@ public class OrderController {
     public ModelAndView productDetail(@PathVariable long userId,
                                       @PathVariable long shopId,
                                       @PathVariable long productId) {
-
         ModelAndView mv = new ModelAndView("product_detail");
 
         mv.addObject("capitalAmount", accountService.getCapitalAccountByUserId(userId));
@@ -87,8 +86,6 @@ public class OrderController {
                                    @RequestParam long shopId,
                                    @RequestParam long payerUserId,
                                    @RequestParam long productId) {
-
-
         PlaceOrderRequest request = buildRequest(redPacketPayAmount, shopId, payerUserId, productId);
 
         String merchantOrderNo = placeOrderService.placeOrder(request.getPayerUserId(), request.getShopId(),
@@ -99,7 +96,6 @@ public class OrderController {
 
     @RequestMapping(value = "/payresult/{merchantOrderNo}", method = RequestMethod.GET)
     public ModelAndView getPayResult(@PathVariable String merchantOrderNo) {
-
         ModelAndView mv = new ModelAndView("pay_success");
 
         String payResultTip = null;
