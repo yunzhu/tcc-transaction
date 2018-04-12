@@ -23,6 +23,8 @@ import java.lang.reflect.Method;
 import java.util.Set;
 
 /**
+ * 可补偿事务拦截器
+ * 
  * Created by changmingxie on 10/30/15.
  */
 public class CompensableTransactionInterceptor {

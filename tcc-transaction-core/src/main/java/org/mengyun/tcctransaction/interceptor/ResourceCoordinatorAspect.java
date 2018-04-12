@@ -6,6 +6,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
 /**
+ * 资源协调者拦截器切面
+ * 
  * Created by changmingxie on 11/8/15.
  */
 @Aspect
