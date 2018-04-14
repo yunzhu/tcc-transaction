@@ -31,7 +31,6 @@ public class CapitalTradeOrderServiceImpl implements CapitalTradeOrderService {
     @Compensable(confirmMethod = "confirmRecord", cancelMethod = "cancelRecord", transactionContextEditor = MethodTransactionContextEditor.class)
     @Transactional
     public String record(TransactionContext transactionContext, CapitalTradeOrderDto tradeOrderDto) {
-
         try {
             Thread.sleep(1000l);
         } catch (InterruptedException e) {
@@ -71,7 +70,6 @@ public class CapitalTradeOrderServiceImpl implements CapitalTradeOrderService {
 
     @Transactional
     public void confirmRecord(TransactionContext transactionContext, CapitalTradeOrderDto tradeOrderDto) {
-
         try {
             Thread.sleep(1000l);
         } catch (InterruptedException e) {
@@ -97,7 +95,6 @@ public class CapitalTradeOrderServiceImpl implements CapitalTradeOrderService {
 
     @Transactional
     public void cancelRecord(TransactionContext transactionContext, CapitalTradeOrderDto tradeOrderDto) {
-
         try {
             Thread.sleep(1000l);
         } catch (InterruptedException e) {

@@ -24,15 +24,12 @@ public class TransactionRecovery {
     private TransactionConfigurator transactionConfigurator;
 
     public void startRecover() {
-
         List<Transaction> transactions = loadErrorTransactions();
 
         recoverErrorTransactions(transactions);
     }
 
     private List<Transaction> loadErrorTransactions() {
-
-
         long currentTimeInMillis = Calendar.getInstance().getTimeInMillis();
 
         TransactionRepository transactionRepository = transactionConfigurator.getTransactionRepository();
@@ -42,12 +39,8 @@ public class TransactionRecovery {
     }
 
     private void recoverErrorTransactions(List<Transaction> transactions) {
-
-
         for (Transaction transaction : transactions) {
-
             if (transaction.getRetriedCount() > transactionConfigurator.getRecoverConfig().getMaxRetryCount()) {
-
                 logger.error(String.format("recover failed with max retry count,will not try again. txid:%s, status:%s,retried count:%d,transaction content:%s", transaction.getXid(), transaction.getStatus().getId(), transaction.getRetriedCount(), JSON.toJSONString(transaction)));
                 continue;
             }
@@ -64,7 +57,6 @@ public class TransactionRecovery {
                 transaction.addRetriedCount();
 
                 if (transaction.getStatus().equals(TransactionStatus.CONFIRMING)) {
-
                     transaction.changeStatus(TransactionStatus.CONFIRMING);
                     transactionConfigurator.getTransactionRepository().update(transaction);
                     transaction.commit();
@@ -72,7 +64,6 @@ public class TransactionRecovery {
 
                 } else if (transaction.getStatus().equals(TransactionStatus.CANCELLING)
                         || transaction.getTransactionType().equals(TransactionType.ROOT)) {
-
                     transaction.changeStatus(TransactionStatus.CANCELLING);
                     transactionConfigurator.getTransactionRepository().update(transaction);
                     transaction.rollback();
@@ -80,7 +71,6 @@ public class TransactionRecovery {
                 }
 
             } catch (Throwable throwable) {
-
                 if (throwable instanceof OptimisticLockException
                         || ExceptionUtils.getRootCause(throwable) instanceof OptimisticLockException) {
                     logger.warn(String.format("optimisticLockException happened while recover. txid:%s, status:%s,retried count:%d,transaction content:%s", transaction.getXid(), transaction.getStatus().getId(), transaction.getRetriedCount(), JSON.toJSONString(transaction)), throwable);

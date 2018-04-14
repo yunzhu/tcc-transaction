@@ -30,7 +30,6 @@ public class PaymentServiceImpl {
     @Compensable(confirmMethod = "confirmMakePayment", cancelMethod = "cancelMakePayment", asyncConfirm = true)
     @Transactional
     public void makePayment(Order order, BigDecimal redPacketPayAmount, BigDecimal capitalPayAmount) {
-
         System.out.println("order try make payment called.time seq:" + DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
 
         //check if the order status is DRAFT, if no, means that another call makePayment for the same order happened, ignore this call makePayment.
@@ -49,8 +48,6 @@ public class PaymentServiceImpl {
     }
 
     public void confirmMakePayment(Order order, BigDecimal redPacketPayAmount, BigDecimal capitalPayAmount) {
-
-
         try {
             Thread.sleep(1000l);
         } catch (InterruptedException e) {
@@ -69,8 +66,6 @@ public class PaymentServiceImpl {
     }
 
     public void cancelMakePayment(Order order, BigDecimal redPacketPayAmount, BigDecimal capitalPayAmount) {
-
-
         try {
             Thread.sleep(1000l);
         } catch (InterruptedException e) {
@@ -89,7 +84,6 @@ public class PaymentServiceImpl {
 
 
     private CapitalTradeOrderDto buildCapitalTradeOrderDto(Order order) {
-
         CapitalTradeOrderDto tradeOrderDto = new CapitalTradeOrderDto();
         tradeOrderDto.setAmount(order.getCapitalPayAmount());
         tradeOrderDto.setMerchantOrderNo(order.getMerchantOrderNo());

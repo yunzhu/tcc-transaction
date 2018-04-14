@@ -31,7 +31,6 @@ public class RedPacketTradeOrderServiceImpl implements RedPacketTradeOrderServic
     @Compensable(confirmMethod = "confirmRecord", cancelMethod = "cancelRecord", transactionContextEditor = MethodTransactionContextEditor.class)
     @Transactional
     public String record(TransactionContext transactionContext, RedPacketTradeOrderDto tradeOrderDto) {
-
         try {
             Thread.sleep(1000l);
         } catch (InterruptedException e) {
@@ -71,7 +70,6 @@ public class RedPacketTradeOrderServiceImpl implements RedPacketTradeOrderServic
 
     @Transactional
     public void confirmRecord(TransactionContext transactionContext, RedPacketTradeOrderDto tradeOrderDto) {
-
         try {
             Thread.sleep(1000l);
         } catch (InterruptedException e) {
@@ -96,7 +94,6 @@ public class RedPacketTradeOrderServiceImpl implements RedPacketTradeOrderServic
 
     @Transactional
     public void cancelRecord(TransactionContext transactionContext, RedPacketTradeOrderDto tradeOrderDto) {
-
         try {
             Thread.sleep(1000l);
         } catch (InterruptedException e) {
