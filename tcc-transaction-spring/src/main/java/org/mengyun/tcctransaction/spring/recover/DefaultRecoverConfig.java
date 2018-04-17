@@ -16,7 +16,7 @@ public class DefaultRecoverConfig implements RecoverConfig {
 
     private int maxRetryCount = 30;
 
-    private int recoverDuration = 120; //120 seconds
+    private int recoverDuration = 6000; //120 seconds
 
     private String cronExpression = "0 */1 * * * ?";
 

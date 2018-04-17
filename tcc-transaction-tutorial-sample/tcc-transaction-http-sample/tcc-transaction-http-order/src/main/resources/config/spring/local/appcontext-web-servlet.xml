@@ -90,7 +90,8 @@
 
 	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>
 	<bean id="fmHtmlEscape" class="freemarker.template.utility.HtmlEscape"/>
-       
+    
+    <!-- 初始化应用上下文，可以在前端模版里面使用contextPath -->
 	<bean id="applicationContextInit" 
 		class="org.mengyun.tcctransaction.sample.http.order.web.comm.MyApplicationContextInit" init-method="init" />
 	
